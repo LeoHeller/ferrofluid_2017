@@ -1,0 +1,20 @@
+#!/usr/bin/expect -f
+spawn /usr/bin/bluetoothctl
+send "agent on\r"
+expect "Agent registered"
+send "default-agent\r"
+send "show\r"
+
+expect -timeout -1 -re "Confirm passkey| Authorize service "
+send "yes\r" 
+
+expect " Authorize service "
+send "yes\r"
+expect " Authorize service "
+send "yes\r"
+expect " Authorize service "
+send "yes\r"
+
+
+
+
