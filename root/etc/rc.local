@@ -18,11 +18,19 @@ if [ "$_IP" ]; then
 fi
 
 # we start pulseaudio:
-DBUS_SESSION_BUS_ADDRESS=unix:path=/run/dbus/system_bus_socket
-/usr/bin/sudo -u pi /usr/bin/pulseaudio --start
-DBUS_SESSION_BUS_PID=$(pgrep -xn pulseaudio)
+#we dont start it because our analyze programm will start it
+export DBUS_SESSION_BUS_ADDRESS=unix:path=/run/dbus/system_bus_socket
+export DBUS_SESSION_BUS_PID=$(pgrep -xn dbus-daemon)
+/usr/bin/sudo -u pi XDG_RUNTIME_DIR="/run/user/1000" /usr/bin/pulseaudio --start --log-target=syslog
+# export DBUS_SESSION_BUS_PID=$(pgrep -xn pulseaudio)
 
-#we start the buetoothpairing loop
-/usr/local/sbin/bt-pairing-loop > /tmp/bt-pairing.log
+# we start the buetoothpairing loop
+# might be better to start it from within udev rule 99 in case the
+# BT connection ends
+/usr/bin/sudo -u pi /usr/local/sbin/bt-pairing-loop > /tmp/bt-pairing.log &
+
+# make a ramdisk, for librosa caching
+mount -t tmpfs -o size=200M none /mnt/ramdisk/
+
 
 exit 0

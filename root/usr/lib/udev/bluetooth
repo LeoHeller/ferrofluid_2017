@@ -43,15 +43,15 @@ add_from_mac(){
         # This script is called early, we just wait to be sure that pulseaudio discovered the device
         sleep 1
         # Very that the source is present
-        CONFIRM=`sudo -u pi pactl list short | grep $bluez_dev`
+        CONFIRM=`sudo -u $USER XDG_RUNTIME_DIR="/run/user/1000" pactl list short | grep $bluez_dev`
         if [ ! -z "$CONFIRM" ]
         then
             echo "Adding the loopback interface:  $bluez_dev"  >> $LOGFILE
-            echo "sudo -u $USER pactl load-module module-loopback source=$bluez_dev sink=$AUDIOSINK rate=44100 adjust_time=0"  >> $LOGFILE
+            echo "sudo -u $USER XDG_RUNTIME_DIR="/run/user/1000" pactl load-module module-loopback source=$bluez_dev sink=$AUDIOSINK rate=44100 adjust_time=0"  >> $LOGFILE
 
             # This command route audio from bluetooth source to the local sink..
             # it's the main goal of this script
-            sudo -u $USER pactl load-module module-loopback source=$bluez_dev sink=$AUDIOSINK rate=44100 adjust_time=0  >> $LOGFILE
+            sudo -u $USER pactl XDG_RUNTIME_DIR="/run/user/1000" load-module module-loopback source=$bluez_dev sink=$AUDIOSINK rate=44100 adjust_time=0  >> $LOGFILE
             return $?
         else
             echo "Unable to find a bluetooth device compatible with pulsaudio using the following device: $bluez_dev" >> $LOGFILE
@@ -163,7 +163,7 @@ case "$ACTION" in
     if [ $OK != 0 ]; then
         echo "Your bluetooth device is not detected !" >> $LOGFILE
         echo "Available sources are:" >> $LOGFILE
-        sudo -u $USER pactl list short sources >> $LOGFILE
+        sudo -u $USER pactl XDG_RUNTIME_DIR="/run/user/1000" list short sources >> $LOGFILE
     else
         echo "Device successfully added " >> $LOGFILE
     fi
