@@ -20,7 +20,7 @@ fi
 # we start pulseaudio:
 /usr/local/sbin/pulseaudio-start &
 
-# we start the buetoothpairing loop
+# we start the bluetooth pairing loop
 # might be better to start it from within udev rule 99 in case the
 # BT connection ends
 /usr/bin/sudo -u pi /usr/local/sbin/bt-pairing-loop > /tmp/bt-pairing.log &
@@ -29,7 +29,7 @@ fi
 /bin/mount -t tmpfs -o size=200M none /mnt/ramdisk/
 
 # we start pigpiod, a daemon running under root, to set IO pins from python with out being root
-# /usr/local/bin/pigpiod
+/usr/local/bin/pigpiod
 
 
 exit 0

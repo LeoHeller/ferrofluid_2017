@@ -15,8 +15,8 @@ chown pi.pi $XDG_RUNTIME_DIR/pulse
 # Name of the local sink in this computer
 # You can get it by calling : pactl list short sinks
 # AUDIOSINK="alsa_output.platform-bcm2835_AUD0.0.analog-stereo"
-AUDIOSINK="alsa_output.0.analog-stereo.monitor"
-#AUDIOSINK="alsa_output.0.analog-stereo"
+# AUDIOSINK="alsa_output.0.analog-stereo.monitor"
+AUDIOSINK="alsa_output.0.analog-stereo"
 # User used to execute pulseaudio, an active session must be open to avoid errors
 USER="pi"
 
@@ -147,7 +147,7 @@ case "$ACTION" in
 
     # Turn off bluetooth discovery before connecting existing BT device to audio
     if [ $ENABLE_BT_DISCOVER -eq 1]; then
-        echo "Stet computer as hidden" >> $LOGFILE
+        echo "Set computer as hidden" >> $LOGFILE
         hciconfig hci0 noscan
     fi
 
