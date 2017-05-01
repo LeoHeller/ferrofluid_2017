@@ -29,7 +29,10 @@ fi
 /bin/mount -t tmpfs -o size=200M none /mnt/ramdisk/
 
 # we start pigpiod, a daemon running under root, to set IO pins from python with out being root
-/usr/local/bin/pigpiod
+/usr/local/bin/pigpiod &
+
+# wait 40s and start visualization program as user pi
+/usr/local/sbin/analyze_start &
 
 
 exit 0
