@@ -72,7 +72,7 @@ def callback(in_data, frame_count, time_info, flag):
     
     ringbufferleft_ampl.extend(np.array([sampleleft]))
     sampleleft = ringbufferleft_ampl.get()[0]
-    # magnet.mag_st(0, sampleleft)
+    magnet.mag_st(0, sampleleft)
     
     if b > threshold:
         sampleright = int(b * 5 * 100/32767)
@@ -87,7 +87,7 @@ def callback(in_data, frame_count, time_info, flag):
         
     ringbufferright_ampl.extend(np.array([sampleright])) #write
     sampleright = ringbufferright_ampl.get()[0] #read
-    # magnet.mag_st(3, sampleright)
+    magnet.mag_st(3, sampleright)
     #print ("   %05d\r" % sample, end="", flush=True)
     
     magnet.start_dc()
